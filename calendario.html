@@ -1,0 +1,84 @@
+﻿<html>
+<head>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="js/bootstrap-datepicker-globalize.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css">
+    <meta charset="utf-8" />
+</head>
+<body>
+    <p>Data Inicio:<input type="text" id="txtDtInicial" />
+    <p>Data Fim :<input type="text" id="txtDtFinal" />
+    <p>
+        Periodo :<input type="text" id="txtPeriodo" onblur="FaixaDatas()" />
+        <div id="datepicker" />
+    </p>
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        CarregarCalendario(false, 0, 0, 1);
+    });
+
+    function FaixaDatas() {
+
+        CarregarCalendario(true, parseInt($("#txtDtInicial").val()), parseInt($("#txtDtFinal").val()), parseInt($("#txtPeriodo").val()));
+    };
+
+    function CarregarCalendario(usarFaixaData, dataInicio, dataFim, periodo) {
+        $("#datepicker").datepicker({
+            multidate: true,
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR',
+            locale: 'pt-BR'
+        });
+
+        if (usarFaixaData) {
+            $("#datepicker").datepicker({
+                multidate: true,
+                format: 'dd/mm/yyyy',
+                language: 'pt-BR',
+                locale: 'pt-BR',
+                beforeShowDay: function (date) {
+                    if (periodo == 1) {
+                        return { classes: 'periodo2' };
+                    }
+                    else if (periodo == 2) {
+                        return {classes: 'periodo2'};
+                    }
+                    else if (periodo == 3) {
+                        return { classes: 'periodo3' };
+                    }
+                }
+            });
+            $("#datepicker").datepicker("setDates", CriarFaixaDatas(dataInicio, dataFim));
+
+
+        }
+    };
+
+    function CriarFaixaDatas(dtInicio, dtFim) {
+        var arrayDatas = [];
+        var data = new Date();
+        var mes = data.getMonth();
+        var ano = data.getFullYear();
+        for (var i = dtInicio; i <= dtFim; i++) {
+            arrayDatas.push(new Date(ano, mes, i));
+        }
+        return arrayDatas;
+    };
+
+    function AdicionarClassePeriodo(periodo) {
+        if (periodo == 1) {
+            return [true, 'periodo2'];
+        }
+        else if (periodo == 2) {
+            return [true, 'periodo2'];
+        }
+        else if (periodo == 3) {
+            return [true, 'periodo3'];
+        }
+    }
+</script>
