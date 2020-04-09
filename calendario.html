@@ -23,7 +23,7 @@
     });
 
     //Variaveis globais
-    //ATENÇÃO: LIMPAR O ARRAY APÓS ENVIAR OS DADOS PARA CONTROLLER
+    //ATENÇÃO: LIMPAR O ARRAY APÓS ENVIAR OS DADOS VIA AJAX
     var listaPeriodoData = new Array();
     var listaData = [];
 
@@ -41,10 +41,12 @@
         });
 
         if (usarFaixaData) {
-
             CriarFaixaDatas(dataInicio, dataFim, periodo);
+            var arrayperiodo1 = filtrarArrayPeriodoDataPorPeriodo(1);
+            var arrayperiodo2 = filtrarArrayPeriodoDataPorPeriodo(2);
+            var arrayperiodo3 = filtrarArrayPeriodoDataPorPeriodo(3);
+
             $('#datepicker').datepicker("destroy");
-            var retornoClasse = '';
 
             $("#datepicker").datepicker({
                 multidate: true,
@@ -54,13 +56,13 @@
                 beforeShowDay: function (date) {
                     var dataCalendario = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-                    if (procurarElementoJsonArray(periodo.toString(), dataCalendario) && periodo == 1) {
+                    if (arrayperiodo1.indexOf(dataCalendario) != -1) {
                         return 'active periodo1';
                     }
-                    else if (procurarElementoJsonArray(periodo.toString(), dataCalendario) && periodo == 2) {
+                    else if (arrayperiodo2.indexOf(dataCalendario) != -1) {
                         return 'active periodo2';
                     }
-                    else if (procurarElementoJsonArray(periodo.toString(), dataCalendario) && periodo == 3) {
+                    else if (arrayperiodo3.indexOf(dataCalendario) != -1) {
                         return 'active periodo3';
                     }
                 }
@@ -83,15 +85,14 @@
     };
 
 
-    function procurarElementoJsonArray(periodo, data) {
-        var arrayFiltrado = listaPeriodoData.filter(obj => obj.periodo == periodo && obj.data == data);
-        return (arrayFiltrado.length > 0);
-    }
+    function filtrarArrayPeriodoDataPorPeriodo(periodo) {
+        var arrayFiltrado = [];
+        listaPeriodoData.forEach(function (item) {
+            if (item.periodo == periodo) {
+                arrayFiltrado.push(item.data)
+            };
+        });
+        return arrayFiltrado;
+    };
 
-    function trimString(s) {
-        var l = 0, r = s.length - 1;
-        while (l < s.length && s[l] == ' ') l++;
-        while (r > l && s[r] == ' ') r -= 1;
-        return s.substring(l, r + 1);
-    }
 </script>
