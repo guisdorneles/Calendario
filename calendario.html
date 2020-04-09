@@ -25,7 +25,6 @@
     //Variaveis globais
     //ATENÇÃO: LIMPAR O ARRAY APÓS ENVIAR OS DADOS VIA AJAX
     var listaPeriodoData = new Array();
-    var listaData = [];
 
     function FaixaDatas() {
 
@@ -74,12 +73,13 @@
         var data = new Date();
         var mes = data.getMonth();
         var ano = data.getFullYear();
+        var arrayPeriodoTemp = [];
+        removerObjetoArray(periodo);
         for (var i = dtInicio; i <= dtFim; i++) {
             listaPeriodoData.push({
                 "periodo": periodo,
                 "data": ano + '-' + parseInt(mes + 1) + '-' + i
             });
-            listaData.push(new Date(ano, mes, i));
         }
         return listaPeriodoData;
     };
@@ -94,5 +94,13 @@
         });
         return arrayFiltrado;
     };
+
+    function removerObjetoArray(periodo) {
+        for (var i = listaPeriodoData.length - 1; i >= 0; --i) {
+            if (listaPeriodoData[i].periodo == periodo) {
+                listaPeriodoData.splice(i, 1);
+            }
+        }
+    }
 
 </script>
