@@ -25,6 +25,7 @@
     //Variaveis globais
     //ATENÇÃO: LIMPAR O ARRAY APÓS ENVIAR OS DADOS PARA CONTROLLER
     var listaPeriodoData = new Array();
+    var listaData = [];
 
     function FaixaDatas() {
 
@@ -41,7 +42,9 @@
 
         if (usarFaixaData) {
 
-            var arrayPeriodoData = CriarFaixaDatas(dataInicio, dataFim, periodo);
+            CriarFaixaDatas(dataInicio, dataFim, periodo);
+            $('#datepicker').datepicker("destroy");
+            var retornoClasse = '';
 
             $("#datepicker").datepicker({
                 multidate: true,
@@ -49,24 +52,23 @@
                 language: 'pt-BR',
                 locale: 'pt-BR',
                 beforeShowDay: function (date) {
-                    if (arrayPeriodoData.periodo == 1) {
-                        return {
-                            classes: 'periodo1'
-                        };
+                    var dataCalendario = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(); 
+                    
+                    if (procurarElementoJsonArray(periodo.toString(), "periodo") && procurarElementoJsonArray(dataCalendario, 'data')) {
+                        return 'active periodo1';  
                     }
-                    else if (arrayPeriodoData.periodo == 2) {
-                        return {
-                            classes: 'periodo2'
-                        };
+                    else if (procurarElementoJsonArray(periodo.toString(), "periodo") && procurarElementoJsonArray(dataCalendario, 'data')) {
+                        return  'active periodo2';
                     }
-                    else if (arrayPeriodoData.periodo == 3) {
-                        return {
-                            classes: 'periodo3'
-                        };
+                    else if (procurarElementoJsonArray(periodo.toString(), "periodo") && procurarElementoJsonArray(dataCalendario, 'data')) {
+                        return  'active periodo3';                        
                     }
+                    return {
+                        Classes: retornoClasse
+                    };
                 }
             });
-        }
+        };
     };
 
     function CriarFaixaDatas(dtInicio, dtFim, periodo) {
@@ -76,21 +78,37 @@
         for (var i = dtInicio; i <= dtFim; i++) {
             listaPeriodoData.push({
                 "periodo": periodo,
-                "data": new Date(ano, mes, i)
+                "data": ano + '-' + parseInt(mes + 1) + '-' + i
             });
+            listaData.push(new Date(ano, mes, i));
         }
         return listaPeriodoData;
     };
 
-    function AdicionarClassePeriodo(periodo) {
-        if (periodo == 1) {
-            return [true, 'periodo2'];
+
+    function procurarElementoJsonArray(elemento, key) {
+        var encontrado = false;
+        elemento = trimString(elemento); // trim it
+        for (var i = 0; i < listaPeriodoData.length; i++) {
+                if (listaPeriodoData[i][key].toString().indexOf(elemento) != -1) {
+                    encontrado = true;
+                }
         }
-        else if (periodo == 2) {
-            return [true, 'periodo2'];
-        }
-        else if (periodo == 3) {
-            return [true, 'periodo3'];
-        }
+        return encontrado;
     }
+
+    function trimString(s) {
+        var l = 0, r = s.length - 1;
+        while (l < s.length && s[l] == ' ') l++;
+        while (r > l && s[r] == ' ') r -= 1;
+        return s.substring(l, r + 1);
+    }
+
+    function compareObjects(o1, o2) {
+        var k = '';
+        for (k in o1) if (o1[k] != o2[k]) return false;
+        for (k in o2) if (o1[k] != o2[k]) return false;
+        return true;
+    }
+
 </script>
