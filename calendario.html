@@ -22,6 +22,10 @@
         CarregarCalendario(false, 0, 0, 1);
     });
 
+    //Variaveis globais
+    //ATENÇÃO: LIMPAR O ARRAY APÓS ENVIAR OS DADOS PARA CONTROLLER
+    var listaPeriodoData = new Array();
+
     function FaixaDatas() {
 
         CarregarCalendario(true, parseInt($("#txtDtInicial").val()), parseInt($("#txtDtFinal").val()), parseInt($("#txtPeriodo").val()));
@@ -36,38 +40,46 @@
         });
 
         if (usarFaixaData) {
+
+            var arrayPeriodoData = CriarFaixaDatas(dataInicio, dataFim, periodo);
+
             $("#datepicker").datepicker({
                 multidate: true,
                 format: 'dd/mm/yyyy',
                 language: 'pt-BR',
                 locale: 'pt-BR',
                 beforeShowDay: function (date) {
-                    if (periodo == 1) {
-                        return { classes: 'periodo2' };
+                    if (arrayPeriodoData.periodo == 1) {
+                        return {
+                            classes: 'periodo1'
+                        };
                     }
-                    else if (periodo == 2) {
-                        return {classes: 'periodo2'};
+                    else if (arrayPeriodoData.periodo == 2) {
+                        return {
+                            classes: 'periodo2'
+                        };
                     }
-                    else if (periodo == 3) {
-                        return { classes: 'periodo3' };
+                    else if (arrayPeriodoData.periodo == 3) {
+                        return {
+                            classes: 'periodo3'
+                        };
                     }
                 }
             });
-            $("#datepicker").datepicker("setDates", CriarFaixaDatas(dataInicio, dataFim));
-
-
         }
     };
 
-    function CriarFaixaDatas(dtInicio, dtFim) {
-        var arrayDatas = [];
+    function CriarFaixaDatas(dtInicio, dtFim, periodo) {
         var data = new Date();
         var mes = data.getMonth();
         var ano = data.getFullYear();
         for (var i = dtInicio; i <= dtFim; i++) {
-            arrayDatas.push(new Date(ano, mes, i));
+            listaPeriodoData.push({
+                "periodo": periodo,
+                "data": new Date(ano, mes, i)
+            });
         }
-        return arrayDatas;
+        return listaPeriodoData;
     };
 
     function AdicionarClassePeriodo(periodo) {
