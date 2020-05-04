@@ -1,0 +1,56 @@
+<html>
+
+<head>
+	<script src="js/jquery.js"></script>
+	<meta charset="utf-8" />
+</head>
+
+<body>
+	<div id="dvPeriodo">
+	</div>
+</body>
+
+</html>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		CarregarPeriodo(3);
+	});
+
+	function CarregarPeriodo(qtdePeriodo) {
+		var htmlPeriodo = "";
+		var anoAtual = new Date().getFullYear();
+		var textoLegenda = "";
+
+		for (let i = 1; i <= qtdePeriodo; i++) {
+			textoLegenda = RetornarTextoLegenda(i);
+			htmlPeriodo += "<span>" + textoLegenda + "</span><p />\n"
+		}
+
+		$("#dvPeriodo").append(htmlPeriodo);
+	};
+
+	function RetornarTextoLegenda(periodo) {
+		var dataAtual = new Date();
+		var ultimoDiaMesAtual = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 1, 0);
+		var ultimoDiaMesSeguinte = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 2, 0);	
+		var mesAtual =("0" + (ultimoDiaMesAtual.getMonth() + 1)).slice(-2);
+		var mesSeguinte = ("0" + (ultimoDiaMesSeguinte.getMonth() + 1)).slice(-2);
+		var texto = "";
+
+		switch (periodo) {
+			case 1:
+				texto = "até " + ultimoDiaMesAtual.getDate() + "/" + mesAtual;
+				break;
+			case 2:
+				texto = "de 01 a 10/" + mesSeguinte;
+				break;
+			case 3:
+				texto = "de 11 a " + ultimoDiaMesSeguinte.getDate() + "/" + mesSeguinte;
+				break;
+		}
+
+		return texto;
+	}
+
+</script>

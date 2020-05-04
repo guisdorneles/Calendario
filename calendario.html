@@ -4,16 +4,26 @@
     <script src="js/bootstrap-datepicker.js"></script>
     <script src="js/locales/bootstrap-datepicker.pt-BR.min.js"></script>
     <script src="js/bootstrap-datepicker-globalize.js"></script>
-    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css">
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
     <meta charset="utf-8" />
 </head>
 <body>
-    <p>Data Inicio:<input type="text" id="txtDtInicial" />
-    <p>Data Fim :<input type="text" id="txtDtFinal" />
-    <p>
-        Periodo :<input type="text" id="txtPeriodo" onblur="FaixaDatas()" />
-        <div id="datepicker" />
-    </p>
+    <div class="row">
+        <div class="col-md-3">
+            <p>Data Inicio:<input type="text" id="txtDtInicial" />
+        </div>
+        <div class="col-md-3">
+            <p>Data Fim :<input type="text" id="txtDtFinal" />
+        </div>
+        <div class="col-md-3">
+            <p>
+                Periodo :<input type="text" id="txtPeriodo" onblur="FaixaDatas()" />
+                <div id="datepicker" />
+            </p>
+        </div>
+    </div>
 </body>
 </html>
 
