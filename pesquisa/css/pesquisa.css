@@ -43,4 +43,9 @@
 .listItens li:not(first-child){
 	padding: 12px 0 10px 50px;
 }
+
+.invisivel
+{	
+	display: none;
+}
     
