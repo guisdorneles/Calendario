@@ -8,7 +8,7 @@
 <body>
 	 <div class="dropdown">
 	  <div id="myDropdown" class="dropdown-content">
-		<input type="text" placeholder="Pesquisar.." id="myInput">
+		<input type="text" placeholder="Pesquisar.." id="myInput" onfocusout = "Sair2(this)">
 		<ul class="listItens invisivel">
 		</ul>
 	  </div>	 
@@ -20,22 +20,26 @@
 </html>
 
 <script type="text/javascript">
-	$(document).ready(function(){
+	
+	
+	$(document).ready(function(){		
+				
 	  $("#myInput").on("keyup", function() { 
 		var textoPesquisa = $(this).val().toLowerCase();
 		if (textoPesquisa.length >= 3){
+			$(".listItens").css("display","block");
 			$(".listItens").removeClass("invisivel");
 			CarregarLista();
-			$(".listItens li:not(:first-child)").filter(function() {
-			  $(this).toggle($(this).text().toLowerCase().indexOf(textoPesquisa) > -1)			  
+			$(".listItens li").filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(textoPesquisa) > -1)
 			});
 			
-			if($('.listItens li:not([style*="display: none"])').length == 1){	
+			if($('.listItens li:not([style*="display: none"])').length == 0){	
 				$(".listItens").html("<li><span>fornecedor não encontrado</span></li>");
 			}
 		}
 		else
-			$(".listItens").addClass("invisivel");
+			$(".listItens").html("<li><span>Digite pelo menos 3 caracteres </span></li>");
 	  });	  
 	});
 	
@@ -45,10 +49,6 @@
 	
 	function CarregarLista(){
 		var arrayDados = [
-				{	
-					id : 0,
-					descricao : "Selecione todos"
-				},
 				{	
 					id : 1,
 					descricao : "Laranja"
@@ -89,14 +89,32 @@
 		$(".listItens").html("");
 		$.each(arrayDados, function(index, valor){
 			if(index == 0){
-				$(".listItens").append('<li><input type="checkbox" id="marcarTodos" rel='+ valor.id + ' onchange="selecionarTodos(this)"><span>'+ valor.descricao +'</span></li>');
+				$(".listItens").append('<li><span tabindex = 0 onclick="ClickLista(this)" onfocus = "ClickLista2(this)" onkeypress="Sair()">'+ valor.descricao +'</span></li>');
 			}
 			else{
-				$(".listItens").append('<li><input type="checkbox" name="name_teste" rel='+ valor.id + '><span>'+ valor.descricao +'</span></li>');
-			}
-			
-			$(".listItens").append('<li><input type="checkbox" rel="Azul2"><span>Azul2</span></li>');
+				$(".listItens").append('<li><span tabindex =  0 onclick="ClickLista(this)" onfocus = "ClickLista2(this)"   onkeypress="Sair(this)">'+ valor.descricao +'</span></li>');
+			}				 
 	})};
 	
+	function ClickLista(obj)
+	{
+		$("#myInput").val($(obj).text());
+		$(".listItens").css("display","none");
+	}
 	
+	function ClickLista2(obj)
+	{
+		$("#myInput").val($(obj).text());
+	}
+		
+	function Sair(obj)
+	{
+		if(event.keyCode === 13)
+			$(".listItens").css("display","none");
+	}	
+	
+	function Sair2(obj)
+	{
+		$(".listItens").css("display","none");
+	}	
 </script>

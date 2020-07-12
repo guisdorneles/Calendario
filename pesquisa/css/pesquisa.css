@@ -31,14 +31,14 @@
 }
 
 .listItens li{
-	list-style-type: none;
+	/* list-style-type: none; */
     font-size: 20px;
     text-align: justify;
 }
 
-.listItens li:first-child{
-	padding: 12px 0 10px 12px;
-}
+/* .listItens li:first-child{ */
+	/* padding: 12px 0 10px 12px; */
+/* } */
 
 .listItens li:not(first-child){
 	padding: 12px 0 10px 50px;
@@ -46,6 +46,6 @@
 
 .invisivel
 {	
-	display: none;
+	/* display: none; */
 }
     
