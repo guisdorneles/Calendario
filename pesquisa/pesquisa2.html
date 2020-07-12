@@ -26,8 +26,8 @@
 				
 	  $("#myInput").on("keyup", function() { 
 		var textoPesquisa = $(this).val().toLowerCase();
+		$(".listItens").css("display","block");
 		if (textoPesquisa.length >= 3){
-			$(".listItens").css("display","block");
 			$(".listItens").removeClass("invisivel");
 			CarregarLista();
 			$(".listItens li").filter(function() {
