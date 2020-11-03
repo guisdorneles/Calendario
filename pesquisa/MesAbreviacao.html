@@ -1,0 +1,79 @@
+﻿<html>
+<head>
+	<script src="js/jquery.js"></script>
+    <meta charset="utf-8" />
+</head>
+<body>
+	<text class="teste">teste</text>
+</body>
+</html>
+
+<script type="text/javascript">
+	
+	
+	$(document).ready(function(){  
+		var listaMeses = CarregarListaMes();
+        console.log(BuscarMesPorNumero(listaMeses, 11));
+	});
+	
+	function CarregarListaMes(){
+		return [
+				{	
+					mes : 1,
+					descricao : "Jan"
+				},
+				{	
+					mes : 2,
+					descricao : "Fev"
+				},
+				{	
+					mes : 3,
+					descricao : "Mar"
+				},
+				{	
+					mes : 4,
+					descricao : "Abr"
+				},
+				{	
+					mes : 5,
+					descricao : "Mai"
+				},
+				{	
+					mes : 6,
+					descricao : "Jun"
+				},
+				{	
+					mes : 7,
+					descricao : "Jul"
+				},
+				{	
+					mes : 8,
+					descricao : "Ago"
+				},
+				{	
+					mes : 9,
+					descricao : "Set"
+				},
+				{	
+					mes : 10,
+					descricao : "Out"
+				},
+				{	
+					mes : 11,
+					descricao : "Nov"
+				},
+				{	
+					mes : 12,
+					descricao : "Dez"
+				}
+			];
+		};	
+	function BuscarMesPorNumero(lista, numeroMes){
+        var mes = lista.find(function (item, i) {
+			return item.mes === numeroMes;
+		})
+		return mes.descricao;
+	}
+
+
+</script>
