@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="js/bootstrap-datepicker-globalize.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-datepicker3.standalone.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <meta charset="utf-8" />
+</head>
+
+<body>
+    <div style="padding: 20px">
+        <span>Valor nao formatado R$ </span>
+        <span>123456789,00</span>
+        <span>Valor formatado</span>
+        <span id="valorInicial">12345678900</span>
+        <span>Valor formatado - sem decimal</span>
+        <span id="valorInicialDecimal">123456789</span>
+</body>
+
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#valorInicial").text(formatarBR($("#valorInicial").text(), 2));
+        $("#valorInicialDecimal").text(formatarBR($("#valorInicialDecimal").text(), 2));
+    });
+
+    function formatarBR(value, decimais) {
+
+        decimais = decimais || 2;
+        var mi = value.length - parseInt(decimais);
+        var sm = parseInt(mi / 3);
+        var regx = "",
+            repl = "";
+
+        for (var i = 0; i < sm; i++) {
+            regx = regx.concat('([0-9]{3})');
+            repl = repl.concat('.$' + (i + 1));
+        }
+
+        regx = regx.concat('([0-9]{' + decimais + '})') + "$";
+        repl = repl.concat(',$' + (sm + 1));
+        value = value.toString().replace(new RegExp(regx, 'g'), repl);
+        return (mi % 3) === 0 ? "R$ " + value.substr(1) : "R$ " + value;
+    }
+</script>
